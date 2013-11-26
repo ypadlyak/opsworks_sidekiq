@@ -1,7 +1,7 @@
 # Adapted from rails::configure: https://github.com/aws/opsworks-cookbooks/blob/master/rails/recipes/configure.rb
 
 include_recipe "deploy"
-include_recipe "opsworks_delayed_job::service"
+include_recipe "opsworks_sidekiq::service"
 
 node[:deploy].each do |application, deploy|
   deploy = node[:deploy][application]
@@ -19,7 +19,7 @@ node[:deploy].each do |application, deploy|
     notifies :run, resources(:execute => "restart Rails app #{application}")
 
     only_if do
-      File.exists?("#{deploy[:deploy_to]}") && File.exists?("#{deploy[:deploy_to]}/shared/config/")
+      File.exists?(deploy[:deploy_to]) && File.exists?("#{deploy[:deploy_to]}/shared/config/")
     end
   end
 
@@ -37,7 +37,7 @@ node[:deploy].each do |application, deploy|
     notifies :run, resources(:execute => "restart Rails app #{application}")
 
     only_if do
-      File.exists?("#{deploy[:deploy_to]}") && File.exists?("#{deploy[:deploy_to]}/shared/config/")
+      File.exists?(deploy[:deploy_to]) && File.exists?("#{deploy[:deploy_to]}/shared/config/")
     end
   end
 end

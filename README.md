@@ -75,9 +75,9 @@ For example, if you have one server that imports files only available to that on
 `cookbooks/sidekiq_import/attributes/default.rb`
 
 ```ruby
-default['sidekiq']['YOUR_APP_NAME']['importer']['process_count'] = 4
-default['sidekiq']['YOUR_APP_NAME']['importer']['config']['concurrency'] = 20
-default['sidekiq']['YOUR_APP_NAME']['importer']['config']['queues'] = ['import_csv', 'import_xml', 'import_json']
+override['sidekiq']['YOUR_APP_NAME']['importer']['process_count'] = 4
+override['sidekiq']['YOUR_APP_NAME']['importer']['config']['concurrency'] = 20
+override['sidekiq']['YOUR_APP_NAME']['importer']['config']['queues'] = ['import_csv', 'import_xml', 'import_json']
 # ...
 
 ```
@@ -85,9 +85,9 @@ default['sidekiq']['YOUR_APP_NAME']['importer']['config']['queues'] = ['import_c
 `cookbooks/sidekiq_rest/attribues/default.rb`
 
 ```ruby
-default['sidekiq']['YOUR_APP_NAME']['worker']['process_count'] = 4
-default['sidekiq']['YOUR_APP_NAME']['worker']['config']['concurrency'] = 40
-default['sidekiq']['YOUR_APP_NAME']['worker']['config']['queues'] = ['cricital', 'default', 'low']
+override['sidekiq']['YOUR_APP_NAME']['worker']['process_count'] = 4
+override['sidekiq']['YOUR_APP_NAME']['worker']['config']['concurrency'] = 40
+override['sidekiq']['YOUR_APP_NAME']['worker']['config']['queues'] = ['cricital', 'default', 'low']
 ```
 
 

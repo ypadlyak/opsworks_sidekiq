@@ -1,12 +1,12 @@
 # Adapted from unicorn::rails: https://github.com/aws/opsworks-cookbooks/blob/master/unicorn/recipes/rails.rb
 
-include_recipe "opsworks_delayed_job::service"
+include_recipe "opsworks_sidekiq::service"
 
 # setup delayed_job service per app
 node[:deploy].each do |application, deploy|
-  
+
   if deploy[:application_type] != 'rails'
-    Chef::Log.debug("Skipping opsworks_delayed_job::setup application #{application} as it is not a Rails app")
+    Chef::Log.debug("Skipping opsworks_sidekiq::setup application #{application} as it is not a Rails app")
     next
   end
 
@@ -19,20 +19,33 @@ node[:deploy].each do |application, deploy|
     group deploy[:group]
     path deploy[:deploy_to]
   end
-  
+
   # Allow deploy user to restart workers
   template "/etc/sudoers.d/#{deploy[:user]}" do
     mode 0440
     source "sudoer.erb"
     variables :user => deploy[:user]
   end
-  
-  template "/etc/monit.d/delayed_job_#{application}.monitrc" do
+
+  workers = node[:sidekiq][application].reject {|k,v| k == :restart_command }
+  config_directory = "#{deploy[:deploy_to]}/shared/config"
+
+  workers.each do |worker, options|
+    (options[:process_count] || 1).times do |n|
+      file "#{config_directory}/sidekiq_#{worker}#{n+1}.yml" do
+        mode 0644
+        action :create
+        content YAML::dump(options[:config].to_hash)
+      end
+    end
+  end
+
+  template "/etc/monit.d/sidekiq_#{application}.monitrc" do
     mode 0644
-    source "delayed_job.monitrc.erb"
-    variables(:deploy => deploy, :application => application, :delayed_job => node[:delayed_job][application])
-    
+    source "sidekiq_monitrc.erb"
+    variables(:deploy => deploy, :application => application, :workers => workers)
+
     notifies :reload, resources(:service => "monit"), :immediately
   end
-  
+
 end

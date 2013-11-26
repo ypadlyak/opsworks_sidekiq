@@ -4,15 +4,15 @@ include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
   if deploy[:application_type] != 'rails'
-    Chef::Log.debug("Skipping opsworks_delayed_job::undeploy application #{application} as it is not an Rails app")
+    Chef::Log.debug("Skipping opsworks_sidekiq::undeploy application #{application} as it is not an Rails app")
     next
   end
 
-  directory "#{deploy[:deploy_to]}" do
+  directory deploy[:deploy_to] do
     recursive true
     action :delete
     only_if do
-      File.exists?("#{deploy[:deploy_to]}")
+      File.exists?(deploy[:deploy_to])
     end
   end
 end
