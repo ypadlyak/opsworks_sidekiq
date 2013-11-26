@@ -1,12 +1,12 @@
-maintainer       "Artsy"
-maintainer_email "it@artsymail.com"
+maintainer       "Draker"
+maintainer_email "devops@drakerenergy.com"
 license          "MIT"
-description      "Configure and deploy background job workers."
+description      "Configure and deploy sidekiq on opsworks."
 
-recipe 'opsworks_delayed_job::setup', 'Set up delayed_job worker.'
-recipe 'opsworks_delayed_job::configure', 'Configure delayed_job worker.'
-recipe 'opsworks_delayed_job::deploy', 'Deploy delayed_job worker.'
-recipe 'opsworks_delayed_job::undeploy', 'Undeploy delayed_job worker.'
-recipe 'opsworks_delayed_job::stop', 'Stop delayed_job worker.'
+recipe 'opsworks_sidekiq::setup', 'Set up delayed_job worker.'
+recipe 'opsworks_sidekiq::configure', 'Configure delayed_job worker.'
+recipe 'opsworks_sidekiq::deploy', 'Deploy delayed_job worker.'
+recipe 'opsworks_sidekiq::undeploy', 'Undeploy delayed_job worker.'
+recipe 'opsworks_sidekiq::stop', 'Stop delayed_job worker.'
 
 depends 'deploy'
