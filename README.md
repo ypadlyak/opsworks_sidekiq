@@ -68,7 +68,7 @@ If the instance is not in a opsworks Rails application server layer then a datab
 
 ### 'Wrapper/Layer' Cookbooks
 
-For more fine grained control and less brittle JSON configuration is it suggest to use wrapper/layer recipes and ovverride attributes in it.
+For more fine grained control and less brittle JSON configuration it is suggested to use wrapper/layer recipes and override attributes in it.
 
 For example, if you have one server that imports files only available to that one server, and another that performs other jobs you might have two custom layers, "sidekiq_import" and "sidekiq_rest". For each layer create a cooresponding cookbook. Each would have an `attributes/default.rb` file that sets the proper attributes, for example:
 
