@@ -1,4 +1,4 @@
-<% @workers.each do |worker, config| %>
+<% @workers.each do |worker, options| %>
   <% (options[:process_count] || 1).times do |n| %>
   <% identifier = "#{@application}-#{worker}#{n+1}" %>
   <% conf_file = "#{@deploy[:deploy_to]}/shared/config/sidekiq_#{worker}#{n+1}.yml" %>
