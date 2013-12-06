@@ -103,6 +103,23 @@ The layer's custom chef recipes should be associated with events as follows:
 * **Shutdown**: `opsworks_sidekiq::stop`
 
 
+Logging
+-------
+
+Logging can be done to either a file or syslog.
+
+To log to a file simply include the logfile path in the config. EG:
+
+```ruby
+override['sidekiq']['YOUR_APP_NAME']['worker']['config']['logfile'] = '/var/log/sidekiq_worker'
+```
+
+To log to syslog set the application syslog property to true.
+
+```ruby
+override['sidekiq']['YOUR_APP_NAME']['syslog'] = true
+```
+
 License
 -------
 
