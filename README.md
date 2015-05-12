@@ -27,7 +27,7 @@ JSON such as the following added as custom JSON to the stack:
   "sidekiq": {
     "YOUR_APP_NAME": {
       "slacker": {
-        "process_count": 2
+        "process_count": 2,
         "config" : {
           "concurrency": 5,
           "verbose": false,
@@ -36,7 +36,7 @@ JSON such as the following added as custom JSON to the stack:
       },
       "hard_worker": {
         "config": {
-          "concurrency": 40
+          "concurrency": 40,
           "queues": [
             ["often", 7],
             ["default", 5],
